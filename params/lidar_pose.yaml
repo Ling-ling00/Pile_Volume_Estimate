@@ -1,0 +1,5 @@
+# topic_name: x y z roll pitch yaw
+- lidar1/lidar_points: "5.0 5.0 10.0 0.0 3.14 0.0"
+- lidar2/lidar_points: "5.0 -5.2 10.0 0.0 3.14 0.0"
+- lidar3/lidar_points: "-5.0 -5.2 10.0 0.0 3.14 0.0"
+- lidar4/lidar_points: "-5.0 5.0 10.0 0.0 3.14 0.0"
