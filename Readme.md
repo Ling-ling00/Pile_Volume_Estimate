@@ -103,7 +103,10 @@ This is the main processing node. It filters noise and finds the pile. Steps inc
 | /pile_cloud | sensor_msgs/PointCloud2 | Filtered cloud of only the target pile |
 
 ### volume_estimator_node
-This node calculates the final volume. It creates a grid on the floor. For each grid cell, it finds the max height of the pile and calculates Volume = Sum of (Height × Cell Area).
+This node calculates the final volume. Steps include:
+- Clustering: Uses DBSCAN to merge pile tops and slopes based on distance.
+- Interpolation: Fills gaps in sparse data using linear interpolation to create a continuous surface.
+- Calculation: Computes total volume by summing (Height - Floor) × Cell Area for every grid cell.
 
 **Input** 
 | Topic Name | Type | Description | 
@@ -115,6 +118,7 @@ This node calculates the final volume. It creates a grid on the floor. For each 
 |:---|:---|:---| 
 | /volume_estimate | std_msgs/Float64 | Total volume of the pile in cubic meters (m3) | 
 | /voxel_heights | std_msgs/Float32MultiArray | A flattened array representing the 2D height grid |
+| /merge_pile_cloud | sensor_msgs/PointCloud2 | A pointcloud show points after interpolate |
 
 ---
 
@@ -165,6 +169,10 @@ These parameters control the final volume calculation grid.
 |:---|:---|:---|:---|
 | voxel_size | Float | 0.2 | Size of the grid cells for volume calculation (0.2 = 20cm x 20cm). |
 | floor_height | Float | 0.0 | The baseline Z-height to calculate volume from. |
+| cluster_dbscan_eps | Float | 1.5 | Search radius for DBSCAN clustering. |
+| cluster_dbscan_min_points| Int | 20 | Minimum points required to form a core cluster in DBSCAN. |
+| cluster_min_points | Int | 50 | Minimum total points required for a valid cluster output. |
+| max_interpolation_dist | Float | 3.0 | Max gap size to fill during interpolation. |
 
 ---
 

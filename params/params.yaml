@@ -23,3 +23,7 @@ volume_estimator_node:
   ros__parameters:
     voxel_size: 0.5
     floor_height: 0.0
+    cluster_dbscan_eps: 1.5
+    cluster_dbscan_min_points: 20
+    cluster_min_points: 50
+    max_interpolation_dist: 3.0
